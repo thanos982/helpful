@@ -405,6 +405,7 @@ class Admin
             $options = array_keys($defaults);
 
             $updated = [];
+            
             foreach ($_POST as $key => $value) {
                 if (in_array($key, $options)) {
                     $service->update_option($key, $value);
@@ -426,6 +427,8 @@ class Admin
                 }
             }
         }
+        $service->renew_options();
+        // print_r($deleted);exit;
         
         wp_safe_redirect(add_query_arg('settings-updated', 'true', wp_get_referer()));
         exit;

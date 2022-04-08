@@ -41,12 +41,16 @@ class WPML
 
     public function create_translation_file()
     {
+        return false;
         $options = new Services\Options();
         $keys = array_keys($options->get_defaults_array());
 
         if (empty($keys)) {
             return;
         }
+
+        $exclude = array('helpful_post_types', 'helpful_exists_hide', 'helpful_hide_in_content');
+        $keys = array_diff($keys, $exclude);
 
         $file_path = $this->get_file_path();
 

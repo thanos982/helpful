@@ -27,7 +27,7 @@ class Options
      */
     public function __construct()
     {
-        $options = maybe_unserialize(get_option('helpful_options', []));
+        $options = get_option('helpful_options');
         $this->options = (!is_array($options)) ? [] : $options;
     }
 
@@ -36,6 +36,7 @@ class Options
      */
     public function renew_options()
     {
+        // print_r($this->options);exit;
         update_option('helpful_options', $this->options);
     }
 
@@ -52,7 +53,7 @@ class Options
 
         // not in use
         $this->options[$name] = $value;
-        $this->renew_options();
+        // $this->renew_options();
 
         // should be replaced
         // update_option($name, $value);
@@ -94,12 +95,15 @@ class Options
         }
 
         $option = null;
-
         if (get_option($name)) {
             $option = get_option($name);
         }
 
         $option = apply_filters('helpful/get_option/' . $name, $option);
+
+        if($name == 'helpful_hide_in_content'){
+            // print_r($this->options);exit;
+        }
 
         if (isset($this->options[$name])) {
             $option = $this->options[$name];
